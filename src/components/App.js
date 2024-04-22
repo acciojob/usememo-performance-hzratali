@@ -1,13 +1,31 @@
-
-import React from "react";
-import './../styles/App.css';
+import React, { useState } from "react";
+import { createTodos } from "./utils.js";
+import TodoList from "./TodoList.js";
 
 const App = () => {
-  return (
-    <div>
-        {/* Do not remove the main div */}
-    </div>
-  )
-}
+  const todos = createTodos();
+  const [tab, setTab] = useState("all");
 
-export default App
+  const [isDark, setIsDark] = useState(false);
+
+  return (
+    <>
+      <button onClick={() => setTab("all")}>All</button>
+      <button onClick={() => setTab("active")}>Active</button>
+      <button onClick={() => setTab("completed")}>Completed</button>
+      <br />
+      <label>
+        <input
+          type="checkbox"
+          checked={isDark}
+          onChange={(e) => setIsDark(e.target.checked)}
+        />
+        Dark mode
+      </label>
+      <hr />
+      <TodoList todos={todos} tab={tab} theme={isDark ? "dark" : "light"} />
+    </>
+  );
+};
+
+export default App;
